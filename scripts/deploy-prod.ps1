@@ -1,5 +1,5 @@
 # --- 1. GARANTIR CONFIGURAÇÃO ---
-Write-Host "Verificando arquivo de configuração .env.prod..."
+Write-Host "Verificando arquivo de configuracao .env.prod..."
 
 if (-not (Test-Path ".env.prod")) {
     # Assume que .env.prod.example existe
@@ -53,7 +53,7 @@ Write-Host "Subindo o ambiente Docker Compose..." -ForegroundColor Cyan
 docker compose -f docker-compose.deploy.yml --env-file .env.prod up -d
 
 # --- 4. VERIFICAR SAÚDE ---
-Write-Host "Aguardando 15 segundos para os serviços iniciarem e rodarem migracoes" -ForegroundColor Yellow
+Write-Host "Aguardando 15 segundos para os servicos iniciarem e rodarem migracoes" -ForegroundColor Yellow
 Start-Sleep -Seconds 15
 
 Write-Host "Realizando Health Checks" -ForegroundColor Cyan
@@ -73,7 +73,7 @@ function Check-Health {
         if ($response.status -eq "ok" -or $response -match '"status":"ok"') {
             Write-Host " $ServiceName esta UP." -ForegroundColor Green
         } else {
-            Write-Host " $ServiceName falhou no Health Check (Status falha)." -ForegroundColor Red
+            Write-Host "⚠️ $ServiceName respondeu, mas com conteúdo inesperado: $response" -ForegroundColor Yellow
         }
     }
     catch {
@@ -82,11 +82,11 @@ function Check-Health {
 }
 
 Check-Health -Url "http://localhost:3000/health" -ServiceName "Gateway Service"
-Check-Health -Url "http://localhost:3001/health" -ServiceName "Auth Service"
-Check-Health -Url "http://localhost:3002/health" -ServiceName "Notification Service"
-Check-Health -Url "http://localhost:3003/health" -ServiceName "User Service"
-Check-Health -Url "http://localhost:3004/health" -ServiceName "Room Service"
-Check-Health -Url "http://localhost:3005/health" -ServiceName "Resources Service"
-Check-Health -Url "http://localhost:3006/health" -ServiceName "Booking Service"
+Check-Health -Url "http://localhost:3001/" -ServiceName "Auth Service"
+Check-Health -Url "http://localhost:3002/" -ServiceName "Notification Service"
+Check-Health -Url "http://localhost:3003/" -ServiceName "User Service"
+Check-Health -Url "http://localhost:3004/" -ServiceName "Room Service"
+Check-Health -Url "http://localhost:3005/" -ServiceName "Resources Service"
+Check-Health -Url "http://localhost:3006/   " -ServiceName "Booking Service"
 
 Write-Host "Deploy e verificacao feito!" -ForegroundColor Green

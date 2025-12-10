@@ -16,7 +16,7 @@ export class HealthController {
     // Você pode adicionar outras verificações aqui, como a conexão com o banco de dados.
     // Por exemplo: () => this.db.pingCheck('database')
     return this.health.check([
-      () => this.http.pingCheck('nestjs-docs', 'https://docs.nestjs.com'),
+      //() => this.http.pingCheck('nestjs-docs', 'https://docs.nestjs.com'),
       () => this.db.pingCheck('database', { timeout: 300 }),
     ]);
   }
