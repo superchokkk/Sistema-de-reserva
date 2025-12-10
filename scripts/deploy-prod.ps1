@@ -1,5 +1,5 @@
 # --- 1. GARANTIR CONFIGURAÇÃO ---
-Write-Host "Verificando arquivo de configuração .env.prod..."
+Write-Host "Verificando arquivo de configuracao .env.prod..."
 
 if (-not (Test-Path ".env.prod")) {
     # Assume que .env.prod.example existe
@@ -53,7 +53,7 @@ Write-Host "Subindo o ambiente Docker Compose..." -ForegroundColor Cyan
 docker compose -f docker-compose.deploy.yml --env-file .env.prod up -d
 
 # --- 4. VERIFICAR SAÚDE ---
-Write-Host "Aguardando 15 segundos para os serviços iniciarem e rodarem migracoes" -ForegroundColor Yellow
+Write-Host "Aguardando 15 segundos para os servicos iniciarem e rodarem migracoes" -ForegroundColor Yellow
 Start-Sleep -Seconds 15
 
 Write-Host "Realizando Health Checks" -ForegroundColor Cyan
