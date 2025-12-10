@@ -15,4 +15,4 @@ CREATE SCHEMA IF NOT EXISTS notifications;
 -- Isso garante que as extensões no schema public (como citext) sejam encontradas
 -- pelos schemas dos microserviços, resolvendo o 'Ponto crítico identificado' do guia
 -- ATENÇÃO: Se o seu serviço já configura o search_path via TypeORM (como recomendado pelo guia), este passo pode ser redundante, mas é uma segurança.
-ALTER ROLE ${POSTGRES_USER} SET search_path TO "$user", public;
+ALTER ROLE admin SET search_path TO "$user", public;
