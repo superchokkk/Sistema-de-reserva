@@ -39,10 +39,10 @@ Write-Host "Baixando imagens oficiais do ghcr.io (usando tags do .env.prod)..." 
 
 # Microserviços
 docker pull "ghcr.io/$REPO_OWNER/auth-service:$AUTH_IMAGE_TAG"
-docker pull "ghcr.io/$REPO_OWNER/user-service:$USER_IMAGE_TAG"
-docker pull "ghcr.io/$REPO_OWNER/room-service:$ROOM_IMAGE_TAG"
+docker pull "ghcr.io/$REPO_OWNER/users-service:$USER_IMAGE_TAG"
+docker pull "ghcr.io/$REPO_OWNER/rooms-service:$ROOM_IMAGE_TAG"
 docker pull "ghcr.io/$REPO_OWNER/resources-service:$RESOURCES_IMAGE_TAG"
-docker pull "ghcr.io/$REPO_OWNER/booking-service:$BOOKING_IMAGE_TAG"
+docker pull "ghcr.io/$REPO_OWNER/bookings-service:$BOOKING_IMAGE_TAG"
 docker pull "ghcr.io/$REPO_OWNER/notification-service:$NOTIFICATION_IMAGE_TAG"
 # Gateway
 docker pull "ghcr.io/$REPO_OWNER/gateway:$GATEWAY_IMAGE_TAG"
