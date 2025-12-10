@@ -8,11 +8,12 @@ services:
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
       - ./init-postgres.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"] # Verifica se o PG está pronto para aceitar conexões
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -22,7 +23,8 @@ services:
 
   gateway:
     image: ghcr.io/${REPO_OWNER}/gateway:${GATEWAY_IMAGE_TAG:-latest}
-    ports: ["3000:3000"]
+    ports:
+      - "3000:3000"
     environment:
       - AUTH_HOST=auth-service
       - NOTIFICATION_HOST=notification-service
@@ -32,16 +34,6 @@ services:
       - BOOKINGS_HOST=bookings-service
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
-      auth-service:
-        condition: service_started
-      users-service:
-        condition: service_started
-      rooms-service:
-        condition: service_started
-      resources-service:
-        condition: service_started
-      bookings-service:
-        condition: service_started
       postgres:
         condition: service_healthy
     networks:
@@ -49,10 +41,14 @@ services:
 
   auth-service:
     image: ghcr.io/${REPO_OWNER}/auth-service:${AUTH_IMAGE_TAG:-latest}
-    ports: ["3001:3000"]
+    ports:
+      - "3001:3000"
     environment:
       - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME_AUTH}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - AUTSCHEMA=${AUTSCHEMA}
       - USERS_HOST=users-service
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
@@ -63,10 +59,14 @@ services:
 
   users-service:
     image: ghcr.io/${REPO_OWNER}/users-service:${USER_IMAGE_TAG:-latest}
-    ports: ["3003:3000"]
+    ports:
+      - "3003:3000"
     environment:
       - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME_USERS}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - USERSCHEMA=${USERSCHEMA}
       - ADMIN_NAME=${ADMIN_NAME}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
@@ -78,10 +78,14 @@ services:
 
   rooms-service:
     image: ghcr.io/${REPO_OWNER}/rooms-service:${ROOM_IMAGE_TAG:-latest}
-    ports: ["3004:3000"]
+    ports:
+      - "3004:3000"
     environment:
       - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME_ROOMS}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - ROOMSCHEMA=${ROOMSCHEMA}
     depends_on:
       postgres:
         condition: service_healthy
@@ -90,10 +94,14 @@ services:
 
   resources-service:
     image: ghcr.io/${REPO_OWNER}/resources-service:${RESOURCES_IMAGE_TAG:-latest}
-    ports: ["3005:3000"]
+    ports:
+      - "3005:3000"
     environment:
       - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME_RESOURCES}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - RESOURCESSCHEMA=${RESOURCESSCHEMA}
     depends_on:
       postgres:
         condition: service_healthy
@@ -102,10 +110,14 @@ services:
 
   bookings-service:
     image: ghcr.io/${REPO_OWNER}/bookings-service:${BOOKING_IMAGE_TAG:-latest}
-    ports: ["3006:3000"]
+    ports:
+      - "3006:3000"
     environment:
       - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME_BOOKINGS}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - BOOKINGSSCHEMA=${BOOKINGSSCHEMA}
       - ROOMS_HOST=rooms-service
     depends_on:
       postgres:
@@ -115,10 +127,11 @@ services:
 
   notification-service:
     image: ghcr.io/${REPO_OWNER}/notification-service:${NOTIFICATION_IMAGE_TAG:-latest}
-    ports: ["3002:3000"]
+    ports:
+      - "3002:3000"
     environment:
       - MAIL_HOST=smtp.exemplo.com
-      # ... configurações de email
+      # Adicione aqui variáveis de banco se o notification usar TypeORM
     depends_on:
       postgres:
         condition: service_healthy
