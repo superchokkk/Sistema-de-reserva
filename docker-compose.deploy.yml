@@ -49,7 +49,7 @@ services:
 
   auth-service:
     image: ghcr.io/${REPO_OWNER}/auth-service:${AUTH_IMAGE_TAG:-latest}
-    ports: "3001:3000"
+    ports: ["3001:3000"]
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_AUTH}
@@ -63,7 +63,7 @@ services:
 
   users-service:
     image: ghcr.io/${REPO_OWNER}/users-service:${USER_IMAGE_TAG:-latest}
-    ports: "3003:3000"
+    ports: ["3003:3000"]
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_USERS}
@@ -78,7 +78,7 @@ services:
 
   rooms-service:
     image: ghcr.io/${REPO_OWNER}/rooms-service:${ROOM_IMAGE_TAG:-latest}
-    ports: "3004:3000"
+    ports: ["3004:3000"]
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_ROOMS}
@@ -90,7 +90,7 @@ services:
 
   resources-service:
     image: ghcr.io/${REPO_OWNER}/resources-service:${RESOURCES_IMAGE_TAG:-latest}
-    ports: "3005:3000"
+    ports: ["3005:3000"]
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_RESOURCES}
@@ -102,7 +102,7 @@ services:
 
   bookings-service:
     image: ghcr.io/${REPO_OWNER}/bookings-service:${BOOKING_IMAGE_TAG:-latest}
-    ports: "3006:3000"
+    ports: ["3006:3000"]
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_BOOKINGS}
@@ -115,7 +115,7 @@ services:
 
   notification-service:
     image: ghcr.io/${REPO_OWNER}/notification-service:${NOTIFICATION_IMAGE_TAG:-latest}
-    ports: "3002:3000"
+    ports: ["3002:3000"]
     environment:
       - MAIL_HOST=smtp.exemplo.com
       # ... configurações de email
