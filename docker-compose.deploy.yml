@@ -61,7 +61,7 @@ services:
       - app-network  
 
   users-service:
-    image: ghcr.io/${REPO_OWNER}/user-service:${USER_IMAGE_TAG:-latest}
+    image: ghcr.io/${REPO_OWNER}/users-service:${USER_IMAGE_TAG:-latest}
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_USERS}
@@ -75,7 +75,7 @@ services:
       - app-network
 
   rooms-service:
-    image: ghcr.io/${REPO_OWNER}/room-service:${ROOM_IMAGE_TAG:-latest}
+    image: ghcr.io/${REPO_OWNER}/rooms-service:${ROOM_IMAGE_TAG:-latest}
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_ROOMS}
@@ -97,7 +97,7 @@ services:
       - app-network
 
   bookings-service:
-    image: ghcr.io/${REPO_OWNER}/booking-service:${BOOKING_IMAGE_TAG:-latest}
+    image: ghcr.io/${REPO_OWNER}/bookings-service:${BOOKING_IMAGE_TAG:-latest}
     environment:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME_BOOKINGS}
