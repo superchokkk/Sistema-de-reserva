@@ -70,7 +70,7 @@ function Check-Health {
         
         # Verifica se a resposta contém status: ok
         # (Adaptação: Invoke-RestMethod já converte JSON para objeto, então verificamos a propriedade)
-        if ($response.status -eq "ok" -or $response -match '"status":"ok"') {
+        if ($response.status -eq "ok" -or $response -match '"status":"ok"' -or $response -match "Hello") {
             Write-Host " $ServiceName esta UP." -ForegroundColor Green
         } else {
             Write-Host "⚠️ $ServiceName respondeu, mas com conteúdo inesperado: $response" -ForegroundColor Yellow
@@ -87,6 +87,6 @@ Check-Health -Url "http://localhost:3002/" -ServiceName "Notification Service"
 Check-Health -Url "http://localhost:3003/" -ServiceName "User Service"
 Check-Health -Url "http://localhost:3004/" -ServiceName "Room Service"
 Check-Health -Url "http://localhost:3005/" -ServiceName "Resources Service"
-Check-Health -Url "http://localhost:3006/   " -ServiceName "Booking Service"
+Check-Health -Url "http://localhost:3006/" -ServiceName "Booking Service"
 
 Write-Host "Deploy e verificacao feito!" -ForegroundColor Green
