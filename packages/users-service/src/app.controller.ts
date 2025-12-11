@@ -11,7 +11,8 @@ export class AppController {
   }
   
   @Get('health')
+  @HttpCode(200) // Força explicitamente o status 200 (opcional, pois já é padrão)
   checkHealth() {
-    return { status: 'ok' };
+    return; // Retorna corpo vazio. O NestJS envia apenas o status 200.
   }
 }
