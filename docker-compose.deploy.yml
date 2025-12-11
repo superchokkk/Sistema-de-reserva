@@ -38,6 +38,12 @@
         - POSTGRES_DB=${POSTGRES_DB}
         - GATEWAYSCHEMA=public
         - JWT_SECRET=${JWT_SECRET}
+      healthcheck:
+        test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000/health', (r) => { if (r.statusCode !== 200) throw new Error(r.statusCode) })\""]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
       depends_on:
         auth-service:
           condition: service_started
@@ -66,6 +72,12 @@
         - AUTSCHEMA=${AUTSCHEMA}
         - USERS_HOST=users-service
         - JWT_SECRET=${JWT_SECRET}
+      healthcheck:
+        test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3001/health', (r) => { if (r.statusCode !== 200) throw new Error(r.statusCode) })\""]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
       depends_on:
         postgres:
           condition: service_healthy
@@ -107,6 +119,12 @@
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
         - POSTGRES_DB=${POSTGRES_DB}
         - ROOMSCHEMA=rooms
+      healthcheck:
+        test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3004/health', (r) => { if (r.statusCode !== 200) throw new Error(r.statusCode) })\""]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
       depends_on:
         postgres:
           condition: service_healthy
@@ -123,6 +141,12 @@
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
         - POSTGRES_DB=${POSTGRES_DB}
         - RESOURCESSCHEMA=${RESOURCESSCHEMA}
+      healthcheck:
+        test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3005/health', (r) => { if (r.statusCode !== 200) throw new Error(r.statusCode) })\""]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
       depends_on:
         postgres:
           condition: service_healthy
@@ -158,11 +182,17 @@
         - "3002:3000"
       environment:
         - MAIL_HOST=smtp.exemplo.com
-        - DB_HOST=${DB_HOST}                # <--- ADICIONE
-        - POSTGRES_USER=${POSTGRES_USER}    # <--- ADICIONE
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # <--- ADICIONE
-        - POSTGRES_DB=${POSTGRES_DB}        # <--- ADICIONE
+        - DB_HOST=${DB_HOST}             
+        - POSTGRES_USER=${POSTGRES_USER} 
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} 
+        - POSTGRES_DB=${POSTGRES_DB}    
         - NOTIFICATIONSCHEMA=notifications
+      healthcheck:
+        test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3002/health', (r) => { if (r.statusCode !== 200) throw new Error(r.statusCode) })\""]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
       depends_on:
         postgres:
           condition: service_healthy
