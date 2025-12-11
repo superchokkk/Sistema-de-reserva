@@ -13,7 +13,7 @@
         - ./data/postgres:/var/lib/postgresql/data
         - ./init-postgres.sql:/docker-entrypoint-initdb.d/init.sql
       healthcheck:
-        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
         interval: 5s
         timeout: 5s
         retries: 5
@@ -32,6 +32,11 @@
         - ROOMS_HOST=rooms-service
         - RESOURCES_HOST=resources-service
         - BOOKINGS_HOST=bookings-service
+        - DB_HOST=${DB_HOST}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DB}
+        - GATEWAYSCHEMA=public
         - JWT_SECRET=${JWT_SECRET}
       depends_on:
         auth-service:
@@ -95,7 +100,7 @@
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
         - POSTGRES_DB=${POSTGRES_DB}
-        - ROOMSCHEMA=${ROOMSCHEMA}
+        - ROOMSCHEMA=rooms
       depends_on:
         postgres:
           condition: service_healthy
@@ -141,6 +146,11 @@
         - "3002:3000"
       environment:
         - MAIL_HOST=smtp.exemplo.com
+        - DB_HOST=${DB_HOST}                # <--- ADICIONE
+        - POSTGRES_USER=${POSTGRES_USER}    # <--- ADICIONE
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # <--- ADICIONE
+        - POSTGRES_DB=${POSTGRES_DB}        # <--- ADICIONE
+        - NOTIFICATIONSCHEMA=notifications
       depends_on:
         postgres:
           condition: service_healthy
