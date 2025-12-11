@@ -81,12 +81,11 @@ function Check-Health {
     }
 }
 
-Check-Health -Url "http://localhost:3000/health" -ServiceName "Gateway Service"
-Check-Health -Url "http://localhost:3001/" -ServiceName "Auth Service"
-Check-Health -Url "http://localhost:3002/" -ServiceName "Notification Service"
-Check-Health -Url "http://localhost:3003/" -ServiceName "User Service"
-Check-Health -Url "http://localhost:3004/" -ServiceName "Room Service"
-Check-Health -Url "http://localhost:3005/" -ServiceName "Resources Service"
-Check-Health -Url "http://localhost:3006/" -ServiceName "Booking Service"
-
+Check-Health -Url "http://localhost:3000/health" -ServiceName "gateway"
+Check-Health -Url "http://localhost:3001/" -ServiceName "auth-service"
+Check-Health -Url "http://localhost:3002/" -ServiceName "notification-service"
+Check-Health -Url "http://localhost:3003/" -ServiceName "users-service"
+Check-Health -Url "http://localhost:3004/" -ServiceName "rooms-service"
+Check-Health -Url "http://localhost:3005/" -ServiceName "resources-service"
+Check-Health -Url "http://localhost:3006/" -ServiceName "bookings-service"
 Write-Host "Deploy e verificacao feito!" -ForegroundColor Green
