@@ -32,6 +32,11 @@ export class BookingsController {
     @Inject('BOOKINGS_SERVICE') private readonly client: ClientProxy
   ) {}
 
+  @Get('health')
+  checkHealth() {
+    return { status: 'ok' };
+  }
+
   @Post()
   @Roles(Role.USER, Role.ADMIN)
   @ApiOperation({ summary: 'Cria uma nova reserva' })
