@@ -1,6 +1,6 @@
 -- Cria a extensão citext (para emails case-insensitive, como recomendado)
 -- Ela é criada no schema 'public' por padrão.
-CREATE DATABASE sistema_reserva;
+--CREATE DATABASE sistema_reserva;
 \connect sistema_reserva;
 CREATE EXTENSION IF NOT EXISTS citext;
 
