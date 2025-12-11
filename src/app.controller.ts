@@ -10,7 +10,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get()
+  @Get('health')
   check() {
     // Resposta simples, igual aos microsserviços
     return { status: 'ok', service: 'gateway' };
